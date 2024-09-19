@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>História Interativa</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            padding: 20px;
+            text-align: center;
+        }
+        .option {
+            margin: 10px 0;
+        }
+        button {
+            padding: 10px 15px;
+            cursor: pointer;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>História Interativa</h1>
+    <div id="story"></div>
+    <div id="options"></div>
+    <img id="image" src="" alt="Cenário da história" />
+
+    <script>
+        const storyElement = document.getElementById('story');
+        const optionsElement = document.getElementById('options');
+        const imageElement = document.getElementById('image');
+
+        let story = [
+            {
+                text: "Você acorda em uma floresta. O que você faz?",
+                options: [
+                    { text: "Explorar a floresta", next: 1 },
+                    { text: "Voltar a dormir", next: 2 }
+                ],
+                image: "https://images.unsplash.com/photo-1521522552171-64c9e1c37c94"
+            },
+            {
+                text: "Você encontra um rio. O que você faz?",
+                options: [
+                    { text: "Nadar no rio", next: 3 },
+                    { text: "Seguir pela margem", next: 4 }
+                ],
+                image: "https://images.unsplash.com/photo-1477745957650-4d4e09c4b5d4"
+            },
+            {
+                text: "Você dorme e sonha com aventuras. Fim da história.",
+                options: [],
+                image: "https://images.unsplash.com/photo-1532372831505-13c8c4ff40e1"
+            },
+            {
+                text: "Você nada e encontra um tesouro! Fim da história.",
+                options: [],
+                image: "https://images.unsplash.com/photo-1530522333827-f9d96f1cf8b1"
+            },
+            {
+                text: "Você segue pela margem e encontra um caminho de volta para casa. Fim da história.",
+                options: [],
+                image: "https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0"
+            }
+        ];
+
+        let currentScene = 0;
+
+        function renderScene(sceneIndex) {
+            const scene = story[sceneIndex];
+            storyElement.textContent = scene.text;
+            optionsElement.innerHTML = '';
+            imageElement.src = scene.image;
+
+            scene.options.forEach(option => {
+                const button = document.createElement('button');
+                button.textContent = option.text;
+                button.classList.add('option');
+                button.onclick = () => renderScene(option.next);
+                optionsElement.appendChild(button);
+            });
+        }
+
+        renderScene(currentScene);
+    </script>
+
+</body>
+</html>
